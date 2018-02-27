@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AppFramework.iml" filepath="$PROJECT_DIR$/AppFramework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base/base.iml" filepath="$PROJECT_DIR$/base/base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/data/data.iml" filepath="$PROJECT_DIR$/data/data.iml" />
+      <module fileurl="file://$PROJECT_DIR$/domain/domain.iml" filepath="$PROJECT_DIR$/domain/domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/location/location.iml" filepath="$PROJECT_DIR$/location/location.iml" />
+      <module fileurl="file://$PROJECT_DIR$/toastlib/toastlib.iml" filepath="$PROJECT_DIR$/toastlib/toastlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/umengsharelib/umengsharelib.iml" filepath="$PROJECT_DIR$/umengsharelib/umengsharelib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wview/wview.iml" filepath="$PROJECT_DIR$/wview/wview.iml" />
+    </modules>
+  </component>
+</project>
