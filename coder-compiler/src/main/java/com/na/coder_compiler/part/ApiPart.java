@@ -1,4 +1,4 @@
-package com.na.coder_compiler;
+package com.na.coder_compiler.part;
 
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;

@@ -1,7 +1,12 @@
 package com.na.coder_compiler;
 
 import com.google.auto.service.AutoService;
+import com.na.coder_compiler.part.ApiPart;
+import com.na.coder_compiler.part.PresenterPart;
+import com.na.coder_compiler.part.SubscriberPart;
+import com.na.coder_compiler.part.UsecasePart;
 import com.wind.coder.annotations.Api;
+import com.wind.coder.annotations.Presenter;
 import com.wind.coder.annotations.Subscriber;
 import com.wind.coder.annotations.Usecase;
 
@@ -119,6 +124,24 @@ public class CoderProcessor extends AbstractProcessor {
                 SubscriberPart subscriberPart=new SubscriberPart(typeAnnotatedElement);
 
                 item.setSubscriber(subscriberPart);
+
+            }
+        }
+
+        for (Element annotatedElement : roundEnvironment.getElementsAnnotatedWith(Presenter.class)) {
+            if (isValid(annotatedElement)) {
+                TypeElement typeAnnotatedElement = (TypeElement) annotatedElement;
+                PackageElement packageElement = mElementUtils.getPackageOf(typeAnnotatedElement);
+                String packageName=packageElement.isUnnamed()?null:packageElement.getQualifiedName().toString();
+                CoderItem item = mCoderMap.get(annotatedElement);
+                if (item == null) {
+                    item = new CoderItem();
+                    item.setPackageName(packageName);
+                    mCoderMap.put(typeAnnotatedElement, item);
+                }
+                PresenterPart presenterPart=new PresenterPart(typeAnnotatedElement);
+
+                item.setPresenter(presenterPart);
 
             }
         }

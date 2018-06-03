@@ -1,5 +1,10 @@
 package com.na.coder_compiler;
 
+import com.na.coder_compiler.part.ApiPart;
+import com.na.coder_compiler.part.PresenterPart;
+import com.na.coder_compiler.part.SubscriberPart;
+import com.na.coder_compiler.part.UsecasePart;
+
 import java.io.IOException;
 
 import javax.annotation.processing.Filer;
@@ -16,6 +21,7 @@ public class CoderItem {
     private UsecasePart usecase;
     private String packageName;
     private SubscriberPart subscriber;
+    private PresenterPart presenter;
 
 
     public void setApi(ApiPart api) {
@@ -23,10 +29,15 @@ public class CoderItem {
     }
 
     public void brewJava(Filer filer) throws IOException {
-        api.brewJava(filer,packageName);
-        usecase.brewJava(filer,packageName);
+        if (api!=null)
+            api.brewJava(filer,packageName);
+        if (usecase!=null)
+            usecase.brewJava(filer,packageName);
         if (subscriber!=null){
             subscriber.brewJava(filer,packageName);
+        }
+        if (presenter!=null){
+            presenter.brewJava(filer,packageName);
         }
     }
 
@@ -41,5 +52,9 @@ public class CoderItem {
 
     public void setSubscriber(SubscriberPart subscriber) {
         this.subscriber = subscriber;
+    }
+
+    public void setPresenter(PresenterPart presenter) {
+        this.presenter = presenter;
     }
 }

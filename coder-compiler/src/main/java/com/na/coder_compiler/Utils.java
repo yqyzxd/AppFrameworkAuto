@@ -7,11 +7,15 @@ import com.squareup.javapoet.ClassName;
  */
 
 public class Utils {
+    private static final String API_SUFFIX="Api";
     private static final String REQUEST_SUFFIX="Request";
     private static final String RESPONSE_SUFFIX="Response";
-    public static final String VIEW_SUFFIX="View";
+    private static final String VIEW_SUFFIX="View";
+    private static final String USECASE_SUFFIX="Usecase";
+    private static final String SUBSCRIBER_SUFFIX="Subscriber";
+
     public static ClassName getApiClassName(String packageName,String simpleName) {
-        String apiSimpleName=simpleName+ApiPart.API_SUFFIX;
+        String apiSimpleName=simpleName+ API_SUFFIX;
         return ClassName.get(packageName,apiSimpleName);
     }
 
@@ -30,6 +34,20 @@ public class Utils {
         return viewClassName;
     }
 
+    public static ClassName getSubscriberClassName(String packageName,String simpleName){
+        ClassName subscriberClassName=ClassName.get(packageName,simpleName+SUBSCRIBER_SUFFIX);
+        return subscriberClassName;
+    }
+    public static ClassName getUsecaseClassName(String packageName,String simpleName){
+        ClassName viewClassName=ClassName.get(packageName,simpleName+USECASE_SUFFIX);
+        return viewClassName;
+    }
+    public static ClassName getUsecaseComponentClassName(){
+        ClassName className=ClassName.get(" com.wind.base.usecase",
+                "UsecaseCompoment");
+        return className;
+
+    }
 
     public static ClassName getInjectClassName(){
         ClassName injectClassName=ClassName.get("javax.inject","Inject");
@@ -40,5 +58,11 @@ public class Utils {
         ClassName nextObservableClassName=ClassName.get("com.wind.base.subscriber",
                 "NextObserver");
         return nextObservableClassName;
+    }
+
+    public static ClassName getExecutePresenterClassName(){
+        ClassName executePresenterClassName=ClassName.get("com.wind.base.mvp.presenter",
+                "ExecutePresenter");
+        return executePresenterClassName;
     }
 }

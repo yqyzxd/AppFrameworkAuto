@@ -1,6 +1,7 @@
 package com.wind.appframework.coder;
 
 import com.wind.coder.annotations.Api;
+import com.wind.coder.annotations.Presenter;
 import com.wind.coder.annotations.Subscriber;
 import com.wind.coder.annotations.Usecase;
 
@@ -10,5 +11,6 @@ import com.wind.coder.annotations.Usecase;
 @Api(httpMethod = Api.HttpMethod.POST,url = "/login")
 @Usecase
 @Subscriber
+@Presenter
 public class Login {
 }

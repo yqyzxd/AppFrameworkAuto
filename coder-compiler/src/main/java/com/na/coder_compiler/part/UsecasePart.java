@@ -1,4 +1,4 @@
-package com.na.coder_compiler;
+package com.na.coder_compiler.part;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
