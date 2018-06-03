@@ -1,8 +1,8 @@
 package com.wind.base.usecase;
 
-import com.wind.base.response.PageResponse;
-import com.wind.base.http.loader.PageLoader;
+import com.wind.base.repository.PageRepository;
 import com.wind.base.request.PageRequest;
+import com.wind.base.response.PageResponse;
 
 import rx.Observable;
 
@@ -13,12 +13,15 @@ import rx.Observable;
 public abstract class PageUsecase<Q extends PageRequest,R extends PageResponse> extends
         Usecase<Q,R> {
 
-    private PageLoader mPageLoader;
-    public PageUsecase(PageLoader pageLoader){
-        this.mPageLoader=pageLoader;
+
+    private PageRepository<Q, R> mPageRepository;
+
+    public PageUsecase(PageRepository<Q, R> pageRepository) {
+        this.mPageRepository = pageRepository;
     }
+
     @Override
     protected Observable<R> buildUsecaseObservable(Q request) {
-        return mPageLoader.load(request);
+        return mPageRepository.loadPage(request);
     }
 }

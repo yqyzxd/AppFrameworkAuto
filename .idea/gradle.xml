@@ -10,12 +10,14 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/base" />
+            <option value="$PROJECT_DIR$/coder-annotations" />
+            <option value="$PROJECT_DIR$/coder-compiler" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/domain" />
-            <option value="$PROJECT_DIR$/location" />
-            <option value="$PROJECT_DIR$/toastlib" />
-            <option value="$PROJECT_DIR$/umengsharelib" />
-            <option value="$PROJECT_DIR$/wview" />
+            <option value="$PROJECT_DIR$/modules/location" />
+            <option value="$PROJECT_DIR$/modules/toastlib" />
+            <option value="$PROJECT_DIR$/modules/umengsharelib" />
+            <option value="$PROJECT_DIR$/modules/wview" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

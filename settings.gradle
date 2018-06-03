@@ -1,1 +1,11 @@
-include ':app', ':base', ':data', ':domain', ':location', ':wview', ':toastlib', ':umengsharelib'
+include ':app', ':base', ':data', ':domain', ':coder-annotations', ':coder-compiler'
+
+include ':location'
+project(':location').projectDir = new File(rootDir, 'modules/location')
+include ':wview'
+project(':wview').projectDir = new File(rootDir, 'modules/wview')
+include ':toastlib'
+project(':toastlib').projectDir = new File(rootDir, 'modules/toastlib')
+include ':umengsharelib'
+project(':umengsharelib').projectDir = new File(rootDir, 'modules/umengsharelib')
+
