@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AppFramework.iml" filepath="$PROJECT_DIR$/AppFramework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aop-annotations/aop-annotations.iml" filepath="$PROJECT_DIR$/aop-annotations/aop-annotations.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aop-plugin/coco-plugin.iml" filepath="$PROJECT_DIR$/aop-plugin/coco-plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aop-runtime/aop-runtime.iml" filepath="$PROJECT_DIR$/aop-runtime/aop-runtime.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/base/base.iml" filepath="$PROJECT_DIR$/base/base.iml" />
       <module fileurl="file://$PROJECT_DIR$/coder-annotations/coder-annotations.iml" filepath="$PROJECT_DIR$/coder-annotations/coder-annotations.iml" />

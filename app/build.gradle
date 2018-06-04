@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'coco'
 android {
     compileSdkVersion 26
     defaultConfig {
@@ -37,6 +37,8 @@ dependencies {
     implementation project (path: ':wview')
     implementation project (path: ':toastlib')
     implementation project (':coder-annotations')
+    implementation project(':aop-annotations')
+    implementation project(':aop-runtime')
     annotationProcessor project(':coder-compiler')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

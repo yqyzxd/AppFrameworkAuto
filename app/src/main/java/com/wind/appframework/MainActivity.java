@@ -2,7 +2,11 @@ package com.wind.appframework;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+
+import com.wind.aop.annotations.StatisticsAnnotation;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +23,19 @@ public class MainActivity extends AppCompatActivity {
         // Example of a call to a native method
         TextView tv = findViewById(R.id.sample_text);
         tv.setText(stringFromJNI());
+
+
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                click();
+            }
+        });
+    }
+
+    @StatisticsAnnotation("login")
+    public void click() {
+        Log.e("MainActivity","click");
     }
 
     /**

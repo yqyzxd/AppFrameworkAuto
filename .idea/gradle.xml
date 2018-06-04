@@ -8,6 +8,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/aop-annotations" />
+            <option value="$PROJECT_DIR$/aop-plugin" />
+            <option value="$PROJECT_DIR$/aop-runtime" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/base" />
             <option value="$PROJECT_DIR$/coder-annotations" />

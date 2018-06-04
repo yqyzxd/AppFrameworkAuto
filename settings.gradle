@@ -1,4 +1,4 @@
-include ':app', ':base', ':data', ':domain', ':coder-annotations', ':coder-compiler'
+include ':app', ':base', ':data', ':domain', ':coder-annotations', ':coder-compiler', ':aop-annotations', ':aop-runtime', ':aop-plugin'
 
 include ':location'
 project(':location').projectDir = new File(rootDir, 'modules/location')
