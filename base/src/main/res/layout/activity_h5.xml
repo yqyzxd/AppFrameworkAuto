@@ -2,17 +2,20 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:clipChildren="false">
 
     <FrameLayout
         android:id="@id/webcontent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipChildren="false">
 
-        <WebView
+        <com.wind.view.NestedWebView
             android:id="@+id/webView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:scrollbars="none"/>
 
         <com.wind.umengsharelib.ShareLayout
             android:id="@+id/share_layout"
@@ -20,8 +23,9 @@
             android:layout_height="match_parent"
             android:visibility="gone" />
     </FrameLayout>
+    
     <com.wind.view.TitleBar
-        android:id="@id/titlebar"
+        android:id="@id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />

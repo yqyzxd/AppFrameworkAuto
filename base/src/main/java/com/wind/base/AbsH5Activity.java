@@ -144,12 +144,7 @@ public abstract class AbsH5Activity extends BaseActivity {
      */
     protected void onWebPageFinished(WebView webView, String url){}
 
-    @Override
-    protected void onResume() {
-        super.onResume();
 
-
-    }
 
     /**
      * 刷新webview

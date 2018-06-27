@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="titlebar" type="id"></item>
+    <item name="title_bar" type="id"></item>
     <item name="webcontent" type="id"></item>
+    <item name="layout_tab" type="id"></item>
+    <item name="layout_view_pager" type="id"></item>
+
+    <item name="tv_key" type="id"></item>
+    <item name="tv_value" type="id"></item>
 </resources>

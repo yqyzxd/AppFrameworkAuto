@@ -71,6 +71,9 @@ public class TitleBar extends FrameLayout {
         return this;
     }
 
+    public TextView getRightView(){
+        return mRightView;
+    }
     public TitleBar setRightText(String text){
         mRightView.setText(text);
         return this;
@@ -80,11 +83,15 @@ public class TitleBar extends FrameLayout {
         mRightView.setCompoundDrawablesWithIntrinsicBounds(resId,0,0,0);
         return this;
     }
-
+    public void setLeftVisibility(int visibility){
+        mLeftView.setVisibility(visibility);
+    }
     public void setLineVisibility(int visibility) {
         mLine.setVisibility(visibility);
     }
-
+    public void setLineColor(int color){
+        mLine.setBackgroundColor(color);
+    }
     public void setRightVisibility(int visibility) {
         mRightView.setVisibility(visibility);
     }

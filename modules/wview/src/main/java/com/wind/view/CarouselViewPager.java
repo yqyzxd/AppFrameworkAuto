@@ -22,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -243,9 +242,9 @@ public class CarouselViewPager extends LinearLayout implements ViewPager.OnPageC
             T path = items.get(position);
 
             if (path instanceof String) {
-                WdImageLoader.display(mContext, iv, (String) (items.get(position)),R.drawable.placeholder_bg);
+                WdImageLoader.display(mContext, iv, (String) (items.get(position)), R.drawable.placeholder_bg);
             } else {
-                WdImageLoader.display(mContext, iv, (Integer) (items.get(position)),R.drawable.placeholder_bg);
+                WdImageLoader.display(mContext, iv, (Integer) (items.get(position)), R.drawable.placeholder_bg);
             }
             iv.setOnClickListener(new OnClickListener() {
                 @Override
