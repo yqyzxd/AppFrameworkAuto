@@ -101,11 +101,11 @@ import java.lang.ref.WeakReference;
     }
 
     private void scheduleTimeout(TransientFrameRecord record) {
-        if (record.duration==TransientFrame.LENGTH_INDEFINITE){
+        if (record.duration== TransientFrame.LENGTH_INDEFINITE){
             return;
         }
         long delay;
-        if (record.duration==TransientFrame.LENGTH_SHORT){
+        if (record.duration== TransientFrame.LENGTH_SHORT){
             delay=SHORT_DURATION_MS;
         }else {
             delay=LONG_DURATION_MS;

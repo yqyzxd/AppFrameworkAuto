@@ -11,7 +11,7 @@ import android.widget.FrameLayout;
  * Created by wind on 2018/1/19.
  */
 
-public abstract class  AbsTransientLayout extends FrameLayout implements ContentViewCallback{
+public abstract class  AbsTransientLayout extends FrameLayout implements ContentViewCallback {
 
     private OnLayoutChangeListener mOnLayoutChangeListener;
     public AbsTransientLayout(@NonNull Context context) {

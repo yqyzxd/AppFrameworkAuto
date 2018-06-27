@@ -13,6 +13,7 @@ import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -31,11 +32,12 @@ public class WebViewHelper {
     public static final String TEL_SCHEME = "tel";
     private static WebViewHelper instance;
     private WebHandler mDefaultHandler;
+
     private WebViewHelper() {
         mHandlerMap = new HashMap<>();
-        mDefaultHandler=new WebHandler() {
+        mDefaultHandler = new WebHandler() {
             @Override
-            public void handle(WebView webView,Uri uri) {
+            public void handle(WebView webView, Uri uri) {
                 webView.loadUrl(uri.toString());
             }
         };
@@ -43,14 +45,15 @@ public class WebViewHelper {
     }
 
     public static WebViewHelper getInstance() {
-        if (instance == null) {
+       /* if (instance == null) {
             synchronized (WebViewHelper.class) {
                 if (instance == null) {
                     instance = new WebViewHelper();
                 }
             }
         }
-        return instance;
+        return instance;*/
+        return new WebViewHelper();
     }
 
     private static void fixDirPath() {
@@ -115,22 +118,25 @@ public class WebViewHelper {
         } else {
             if (schemeMap.containsKey(name)) {
                 throw new RuntimeException("already register name:" + name);
-            }
-            schemeMap.put(name, handler);
+            } else
+                schemeMap.put(name, handler);
         }
         return this;
     }
+
     public void inflateWebView(final Activity activity, WebView webView) {
         inflateWebView(activity, webView, null, null);
     }
+
     public void inflateWebView(final Activity activity, WebView webView, final OnPageLoadingListener onPageLoadingListener) {
         inflateWebView(activity, webView, null, onPageLoadingListener);
     }
+
     public void inflateWebView(final Activity activity, WebView webView, final ProtocolHandler protocolHandler) {
         inflateWebView(activity, webView, protocolHandler, null);
     }
 
-    public void inflateWebView(final Activity activity,final WebView webView, final ProtocolHandler protocolHandler, final OnPageLoadingListener onPageLoadingListener) {
+    public void inflateWebView(final Activity activity, final WebView webView, final ProtocolHandler protocolHandler, final OnPageLoadingListener onPageLoadingListener) {
         fixDirPath();
         //屏蔽掉长按事件 因为webview长按时将会调用系统的复制控件:
         webView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -140,7 +146,7 @@ public class WebViewHelper {
                 return true;
             }
         });
-        webView.setWebChromeClient(new WebViewHelper.ReWebChomeClient(new WebViewHelper.OpenFileChooserCallBack() {
+        webView.setWebChromeClient(new ReWebChomeClient(new OpenFileChooserCallBack() {
             @Override
             public void openFileChooserCallBack(ValueCallback<Uri> uploadMsg, String acceptType) {
                 mUploadMsg = uploadMsg;
@@ -167,11 +173,10 @@ public class WebViewHelper {
 
             @Override
             public boolean shouldOverrideUrlLoading(final WebView view, String url) {
-
                 //uri的构成->scheme://authority/path1/path2/path3?query#fragment
-                if (protocolHandler!=null){
+                if (protocolHandler != null) {
                     protocolHandler.handle(url);
-                }else {
+                } else {
 
                     Uri uri = Uri.parse(url);
                     String scheme = uri.getScheme();
@@ -213,6 +218,17 @@ public class WebViewHelper {
         //启用js
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setBlockNetworkImage(false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//android5.0以下都是允许的
+            /*
+               1,MIXED_CONTENT_NEVER_ALLOW：Webview不允许一个安全的站点（https）去加载非安全的站点内容（http）,
+               比如，https网页内容的图片是http链接。强烈建议App使用这种模式，因为这样更安全。
+                2,MIXED_CONTENT_ALWAYS_ALLOW：在这种模式下，WebView是可以在一个安全的站点（Https）
+                里加载非安全的站点内容（Http）,这是WebView最不安全的操作模式，尽可能地不要使用这种模式。
+                3,MIXED_CONTENT_COMPATIBILITY_MODE：在这种模式下，当涉及到混合式内容时,WebView会尝试去兼容最新Web浏览器的风格。
+                一些不安全的内容（Http）能被加载到一个安全的站点上（Https），而其他类型的内容将会被阻塞。这些内容的类型是被允许加载还是被阻塞可能会随着版本的不同而改变，并没有明确的定义。这种模式主要用于在App里面不能控制内容的渲染，但是又希望在一个安全的环境下运行。
+             */
+            webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
         webView.getSettings().setUseWideViewPort(true);//设置此属性，可任意比例缩放。大视图模式
         webView.getSettings().setLoadWithOverviewMode(true);//和setUseWideViewPort(true)一起解决网页自适应问题
         webView.getSettings().setAppCacheEnabled(true);//是否使用缓存

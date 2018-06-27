@@ -8,6 +8,9 @@ import android.content.Context;
 
 public abstract class AbsLocationHelper {
 
+    protected LocationOption mLocationOption;
+
+    public abstract void stopLocation();
 
     public enum Server{
         SERVER_BAIDU,SERVER_GAODE
@@ -19,19 +22,51 @@ public abstract class AbsLocationHelper {
     }
 
 
-    public static AbsLocationHelper getInstance(Context context,Server server){
+    public static AbsLocationHelper getInstance(Context context, Server server){
         AbsLocationHelper instance=null;
         switch (server){
             case SERVER_BAIDU:
-                instance=BaiduLocationHelper.getInstance(context);
+                instance= BaiduLocationHelper.getInstance(context);
                 break;
             case SERVER_GAODE:
-                instance=GaoDeLocationHelper.getInstance(context);
+                instance= GaoDeLocationHelper.getInstance(context);
                 break;
         }
         return instance;
     }
 
+    public AbsLocationHelper setOnceLocation(boolean onceLocation){
+        if (mLocationOption==null){
+            mLocationOption=new LocationOption();
+        }
+        mLocationOption.onceLocation=onceLocation;
+        return this;
+    }
+    public AbsLocationHelper setNeedAddress(boolean needAddress){
+        if (mLocationOption==null){
+            mLocationOption=new LocationOption();
+        }
+        mLocationOption.needAddress=needAddress;
+        return this;
+    }
+    public AbsLocationHelper setInterval(long interval){
+        if (mLocationOption==null){
+            mLocationOption=new LocationOption();
+        }
+        mLocationOption.locationInterval=interval;
+        return this;
+    }
+
+    public static class LocationOption{
+        public boolean onceLocation;
+        public boolean needAddress;
+        public long locationInterval;
+        public LocationOption(){
+            onceLocation=true;
+            needAddress=true;
+            locationInterval=1000;
+        }
+    }
     public static class LocationInfo{
         private double latitude;
         private double longitude;

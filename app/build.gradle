@@ -36,10 +36,10 @@ dependencies {
     implementation project (path: ':location')
     implementation project (path: ':wview')
     implementation project (path: ':toastlib')
-    implementation project (':coder-annotations')
-    implementation project(':aop-annotations')
-    implementation project(':aop-runtime')
-    annotationProcessor project(':coder-compiler')
+    implementation project (path:':coder-annotations')
+    implementation project(path:':aop-annotations')
+    implementation project(path:':aop-runtime')
+    annotationProcessor project(path:':coder-compiler')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'

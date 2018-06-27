@@ -32,7 +32,7 @@ public class ToastTransientLayout extends AbsTransientLayout {
 
     private TextView tvMsg;
     private void init(String text){
-        inflate(getContext(),R.layout.layout_toast,this);
+        inflate(getContext(), R.layout.layout_toast,this);
         tvMsg=findViewById(R.id.tv);
         tvMsg.setText(text);
     }

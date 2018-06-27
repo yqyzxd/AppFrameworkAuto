@@ -3,6 +3,7 @@ package com.wind.toastlib;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.view.ViewCompat;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -13,6 +14,7 @@ import android.widget.FrameLayout;
  */
 
 public class TransientFrame {
+   public static final String TAG=TransientFrame.class.getSimpleName();
 
     public static final int LENGTH_INDEFINITE = -2;
     public static final int LENGTH_SHORT =-1;
@@ -121,10 +123,11 @@ public class TransientFrame {
     }
 
     private void onViewShown() {
+        Log.e(TAG,"onViewShown");
         TransientFrameManager.getInstance().onShown(mCallback);
     }
     private void onViewHidden() {
-
+        Log.e(TAG,"onViewHidden");
         TransientFrameManager.getInstance().onDismiss(mCallback);
     }
     private boolean shouldAnimate() {
@@ -144,9 +147,13 @@ public class TransientFrame {
     private static ViewGroup findSuitableParent(View view) {
         while (view!=null){
             if (view instanceof FrameLayout){
+                if (view.getId()== R.id.toast_container){
+                    return (ViewGroup) view;
+                }
                 if (view.getId()==android.R.id.content){
                     return (ViewGroup) view;
                 }
+
             }
             ViewParent parent=view.getParent();
             if ( parent instanceof View){

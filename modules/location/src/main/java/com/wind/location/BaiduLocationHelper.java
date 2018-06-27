@@ -35,6 +35,14 @@ public class BaiduLocationHelper extends AbsLocationHelper {
     }
 
     @Override
+    public void stopLocation() {
+        if (mLocationClient!=null){
+            mLocationClient.stop();
+            mLocationClient=null;
+        }
+    }
+
+    @Override
     public void startLocation(LocationListener listener) {
         mListener=listener;
         mLocationClient = new LocationClient(mContext);
@@ -54,11 +62,21 @@ public class BaiduLocationHelper extends AbsLocationHelper {
 //bd09ll：百度经纬度坐标；
 //bd09：百度墨卡托坐标；
 //海外地区定位，无需设置坐标类型，统一返回wgs84类型坐标
-
-        option.setScanSpan(0);
-//可选，设置发起定位请求的间隔，int类型，单位ms
+        if (mLocationOption!=null){
+            if (mLocationOption.onceLocation){
+                option.setScanSpan(0);
+            }else {
+                option.setScanSpan((int)mLocationOption.locationInterval);
+            }
+            option.setIsNeedAddress(mLocationOption.needAddress);
+        }else {
+            option.setScanSpan(0);
+            option.setIsNeedAddress(true);
+            //可选，设置发起定位请求的间隔，int类型，单位ms
 //如果设置为0，则代表单次定位，即仅定位一次，默认为0
 //如果设置非0，需设置1000ms以上才有效
+        }
+
 
         option.setOpenGps(true);
 //可选，设置是否使用gps，默认false
@@ -77,7 +95,7 @@ public class BaiduLocationHelper extends AbsLocationHelper {
         //option.setWifiCacheTimeOut(5 * 60 * 1000);
 //可选，7.2版本新增能力
 //如果设置了该接口，首次启动定位时，会先判断当前WiFi是否超出有效期，若超出有效期，会先重新扫描WiFi，然后定位
-        option.setIsNeedAddress(true);
+
         option.setEnableSimulateGps(false);
 //可选，设置是否需要过滤GPS仿真结果，默认需要，即参数为false
 

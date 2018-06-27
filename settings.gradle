@@ -1,4 +1,4 @@
-include ':app', ':base', ':data', ':domain', ':coder-annotations', ':coder-compiler', ':aop-annotations', ':aop-runtime', ':aop-plugin'
+include ':app', ':base', ':data', ':domain',  ':', ':', ':'
 
 include ':location'
 project(':location').projectDir = new File(rootDir, 'modules/location')
@@ -8,4 +8,16 @@ include ':toastlib'
 project(':toastlib').projectDir = new File(rootDir, 'modules/toastlib')
 include ':umengsharelib'
 project(':umengsharelib').projectDir = new File(rootDir, 'modules/umengsharelib')
+
+include ':coder-annotations'
+project(':coder-annotations').projectDir = new File(rootDir, 'modules/coder-annotations')
+include ':coder-compiler'
+project(':coder-compiler').projectDir = new File(rootDir, 'modules/coder-compiler')
+include ':aop-annotations'
+project(':aop-annotations').projectDir = new File(rootDir, 'modules/aop-annotations')
+include ':aop-runtime'
+project(':aop-runtime').projectDir = new File(rootDir, 'modules/aop-runtime')
+include ':aop-plugin'
+project(':aop-plugin').projectDir = new File(rootDir, 'modules/aop-plugin')
+
 

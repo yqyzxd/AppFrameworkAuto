@@ -26,8 +26,6 @@ import java.util.Enumeration;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static android.R.attr.versionCode;
-
 /**
  * Created by wind on 16/6/8.
  */
@@ -337,7 +335,7 @@ public class AppUtil {
         Timer tExit = null;
         if (isExit == false) {
             isExit = true; // 准备退出
-            ToastUtil.showToast(activity, "再按一次退出程序");
+            ToastUtilDeprecated.showToast(activity, "再按一次退出程序");
             tExit = new Timer();
             tExit.schedule(new TimerTask() {
                 @Override

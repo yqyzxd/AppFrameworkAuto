@@ -2,10 +2,12 @@ package com.wind.base;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.support.v4.app.FragmentActivity;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.wind.base.utils.SystemUiUtil;
+import com.wind.umengsharelib.UmengActivity;
 import com.wind.view.TitleBar;
 
 
@@ -13,27 +15,25 @@ import com.wind.view.TitleBar;
  * Created by wind on 2017/11/28.
  */
 
-public class BaseActivity extends FragmentActivity {
+public class BaseActivity extends UmengActivity {
 
     protected TitleBar mTitleBar;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        SystemUiUtil.setStatusBarColor(this, Color.WHITE);
+    }
+
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        SystemUiUtil.setStatusBarColor(this, Color.WHITE);
-      /*  tvTitle = findViewById(R.id.tv_title);
-        View leftView = findViewById(R.id.iv_left);
-        if (leftView != null) {
-            leftView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onBackPressed();
-                }
-            });
-        }
-        tvRight = findViewById(R.id.tv_right);
-*/
-        View titleBar=$(R.id.titlebar);
+        View titleBar=$(R.id.title_bar);
         mTitleBar= (TitleBar) titleBar;
+        if (mTitleBar!=null) {
+            mTitleBar.setTextColor(Color.parseColor("#1a1a1a"));
+            mTitleBar.setLineColor(getResources().getColor(R.color.colordbdbdb));
+        }
         setTitle();
     }
 
@@ -43,17 +43,6 @@ public class BaseActivity extends FragmentActivity {
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // MobclickAgent.onResume(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // MobclickAgent.onPause(this);
-    }
 
     public boolean isFinish() {
         return this == null || isFinishing();
@@ -65,5 +54,6 @@ public class BaseActivity extends FragmentActivity {
 
     protected void setTitle() {
     }
+
 
 }

@@ -8,6 +8,8 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 
+import static com.amap.api.location.AMapLocation.LOCATION_SUCCESS;
+
 /**
  * Created by wind on 2018/1/9.
  */
@@ -18,8 +20,10 @@ public class GaoDeLocationHelper extends AbsLocationHelper {
     private static GaoDeLocationHelper instance;
     private Context mContext;
     private LocationListener mListener;
+    private AMapLocationClient mLocationClient;
+
     private GaoDeLocationHelper(Context context) {
-        this.mContext=context;
+        this.mContext = context;
     }
 
     public static GaoDeLocationHelper getInstance(Context context) {
@@ -34,14 +38,30 @@ public class GaoDeLocationHelper extends AbsLocationHelper {
     }
 
     @Override
+    public void stopLocation() {
+        if (mLocationClient != null) {
+            mLocationClient.stopLocation();
+            mLocationClient = null;
+        }
+    }
+
+    @Override
     public void startLocation(LocationListener listener) {
-        mListener=listener;
-        AMapLocationClient mLocationClient = new AMapLocationClient(mContext);
+        mListener = listener;
+        mLocationClient = new AMapLocationClient(mContext);
         AMapLocationClientOption mLocationClientOption = new AMapLocationClientOption();
         mLocationClient.setLocationListener(new MyLocationListener());
         mLocationClientOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
-        mLocationClientOption.setOnceLocation(true);//只定位一次
-        mLocationClientOption.setNeedAddress(true);
+        if (mLocationOption != null) {
+            mLocationClientOption.setOnceLocation(mLocationOption.onceLocation);
+            mLocationClientOption.setNeedAddress(mLocationOption.needAddress);
+            mLocationClientOption.setInterval(mLocationOption.locationInterval);
+        } else {
+            mLocationClientOption.setOnceLocation(true);//只定位一次
+            mLocationClientOption.setNeedAddress(true);//需要解析地址
+        }
+
+
         //设置定位参数
         mLocationClient.setLocationOption(mLocationClientOption);
         // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
@@ -51,32 +71,35 @@ public class GaoDeLocationHelper extends AbsLocationHelper {
         //启动定位
         mLocationClient.startLocation();
     }
-    public class MyLocationListener implements AMapLocationListener{
+
+    public class MyLocationListener implements AMapLocationListener {
 
         @Override
         public void onLocationChanged(AMapLocation location) {
-            LocationInfo locationInfo=new LocationInfo();
-            double latitude = location.getLatitude();    //获取纬度信息
-            double longitude = location.getLongitude();    //获取经度信息
-            locationInfo.setLatitude(latitude);
-            locationInfo.setLongitude(longitude);
+            if (location.getErrorCode() == LOCATION_SUCCESS) {
+                LocationInfo locationInfo = new LocationInfo();
+                double latitude = location.getLatitude();    //获取纬度信息
+                double longitude = location.getLongitude();    //获取经度信息
+                locationInfo.setLatitude(latitude);
+                locationInfo.setLongitude(longitude);
 
-            String province=location.getProvince();
-            String city=location.getCity();
-            if (!TextUtils.isEmpty(province)){
-                if (province.endsWith("省")||province.endsWith("市")){
-                    province=province.substring(0,province.length()-1);
-                }
+                String province = location.getProvince();
+                String city = location.getCity();
+                if (!TextUtils.isEmpty(province)) {
+                    if (province.endsWith("省") || province.endsWith("市")) {
+                        province = province.substring(0, province.length() - 1);
+                    }
 
-            }
-            if (!TextUtils.isEmpty(city)) {
-                if (city.endsWith("市")) {
-                    city = city.substring(0, city.length() - 1);
                 }
+                if (!TextUtils.isEmpty(city)) {
+                    if (city.endsWith("市")) {
+                        city = city.substring(0, city.length() - 1);
+                    }
+                }
+                locationInfo.setProvince(province);
+                locationInfo.setCity(city);
+                mListener.location(locationInfo);
             }
-            locationInfo.setProvince(province);
-            locationInfo.setCity(city);
-            mListener.location(locationInfo);
         }
     }
 

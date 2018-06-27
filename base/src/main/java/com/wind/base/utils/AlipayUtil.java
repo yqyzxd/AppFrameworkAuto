@@ -22,7 +22,7 @@ public class AlipayUtil {
             context.startActivity(intent);
 
         }else {
-            ToastUtil.showToast(context,"请先安装支付宝");
+            ToastUtilDeprecated.showToast(context,"请先安装支付宝");
         }
     }
     //判断是否安装支付宝app

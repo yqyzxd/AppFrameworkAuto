@@ -8,15 +8,15 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/aop-annotations" />
-            <option value="$PROJECT_DIR$/aop-plugin" />
-            <option value="$PROJECT_DIR$/aop-runtime" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/base" />
-            <option value="$PROJECT_DIR$/coder-annotations" />
-            <option value="$PROJECT_DIR$/coder-compiler" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/modules/aop-annotations" />
+            <option value="$PROJECT_DIR$/modules/aop-plugin" />
+            <option value="$PROJECT_DIR$/modules/aop-runtime" />
+            <option value="$PROJECT_DIR$/modules/coder-annotations" />
+            <option value="$PROJECT_DIR$/modules/coder-compiler" />
             <option value="$PROJECT_DIR$/modules/location" />
             <option value="$PROJECT_DIR$/modules/toastlib" />
             <option value="$PROJECT_DIR$/modules/umengsharelib" />
