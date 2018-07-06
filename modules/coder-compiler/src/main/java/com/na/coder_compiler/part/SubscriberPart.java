@@ -1,6 +1,7 @@
 package com.na.coder_compiler.part;
 
 import com.na.coder_compiler.Utils;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -14,7 +15,6 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 
 import static com.na.coder_compiler.Utils.getNextObservableClassName;
-import static com.na.coder_compiler.Utils.getResponseClassName;
 import static com.na.coder_compiler.Utils.getViewClassName;
 
 /**
@@ -23,17 +23,26 @@ import static com.na.coder_compiler.Utils.getViewClassName;
 
 public class SubscriberPart {
     public static final String SUBSCRIBER_SUFFIX="Subscriber";
+    public static final String PACKAGE_SUFFIX=".subscriber";
 
     private String annotatedClassSimpleName;
     private String packageName;
-    public SubscriberPart(TypeElement annotatedElement) {
+    private String parentPackageName;
+    private String prefix;
+    private Subscriber subscriber;
+    private ClassName viewClassName;
+    private ClassName responseClassName;
+    public SubscriberPart(TypeElement annotatedElement,Subscriber subscriber) {
         annotatedClassSimpleName=annotatedElement.getSimpleName().toString();
-
-        Subscriber subscriber=annotatedElement.getAnnotation(Subscriber.class);
+        this.subscriber=subscriber;
+        //Subscriber subscriber=annotatedElement.getAnnotation(Subscriber.class);
         packageName=subscriber.packageName();
+        parentPackageName=Utils.getPackageElement(annotatedElement).getQualifiedName().toString();
         if ("".equals(packageName)|| null==packageName){
-            packageName= Utils.getPackageElement(annotatedElement).getQualifiedName().toString();
+            packageName=parentPackageName+ PACKAGE_SUFFIX;
         }
+
+
     }
 
 
@@ -41,13 +50,16 @@ public class SubscriberPart {
 
         MethodSpec.Builder constructor=MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PUBLIC)
-                .addParameter(getViewClassName(packageName,annotatedClassSimpleName),"mvpView")
+                .addParameter(viewClassName,"mvpView")
                 .addStatement(" super(mvpView)");
 
-        String subscriberSimpleClassName=annotatedClassSimpleName+SUBSCRIBER_SUFFIX;
+        String subscriberSimpleClassName=prefix+SUBSCRIBER_SUFFIX;
         ParameterizedTypeName parameterizedTypeName=ParameterizedTypeName.get(getNextObservableClassName(),
-                getViewClassName(packageName,annotatedClassSimpleName),getResponseClassName(packageName,annotatedClassSimpleName));
+                viewClassName,responseClassName);
+
+
         TypeSpec.Builder typeSpec=TypeSpec.classBuilder(subscriberSimpleClassName)
+                .addModifiers(Modifier.PUBLIC)
                 .superclass(parameterizedTypeName)
                 .addMethod(constructor.build());
 
@@ -55,4 +67,23 @@ public class SubscriberPart {
     }
 
 
+    public String getPackageName() {
+        return packageName;
+    }
+
+
+
+    public void setParam(String prefix,String viewCanonicalName ,String responseCanonicalName) {
+        this.prefix=prefix;
+        if (Utils.isEmpty(viewCanonicalName)){
+            viewClassName=getViewClassName(parentPackageName,prefix);
+        }else {
+            viewClassName=ClassName.bestGuess(viewCanonicalName);
+        }
+        if (Utils.isEmpty(responseCanonicalName)){
+            responseClassName=getViewClassName(parentPackageName,prefix);
+        }else {
+            responseClassName=ClassName.bestGuess(responseCanonicalName);
+        }
+    }
 }

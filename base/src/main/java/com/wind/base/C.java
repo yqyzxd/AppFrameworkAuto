@@ -92,7 +92,7 @@ public class C {
         static String RELEASE_BASE_URL="https://app.tuhaofanju.com/";
 
         public static String getBaseUrl(){
-            return RELEASE_BASE_URL;
+            return DEBUG_BASE_URL;
         }
         /**
          * 图片服务器地址

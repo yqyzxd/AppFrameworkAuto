@@ -1,6 +1,7 @@
-package com.wind.appframework.coder;
+package com.wind.appframework.login;
 
 import com.wind.base.mvp.view.PureMvpView;
+import com.wind.data.login.LoginResponse;
 
 /**
  * Created by wind on 2018/6/3.

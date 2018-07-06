@@ -24,33 +24,41 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.QueryMap;
 
+import static com.na.coder_compiler.Utils.getViewClassName;
+
 /**
  * Created by wind on 2018/6/3.
  */
 
 public class ApiPart {
      static final String API_SUFFIX="Api";
+     static final String PACKAGE_SUFFITX=".api";
      static final String RX_OBSERVABLE_NAME="Observable";
      static final String RX="rx";
      static final String RESPONSE_SUFFIX="Response";
     private Api.HttpMethod method;
     private String url;
     private String packageName;
-
+    private String parentPackageName;
     private String annotatedClassSimpleName;
-    public ApiPart(TypeElement annotatedElement){
+    private String prefix;
+    private ClassName responseClassName;
+    public ApiPart(TypeElement annotatedElement,Api api){
         annotatedClassSimpleName=annotatedElement.getSimpleName().toString();
-        Api api=annotatedElement.getAnnotation(Api.class);
+            //Api api=annotatedElement.getAnnotation(Api.class);
         method=api.httpMethod();
         url=api.url();
         packageName=api.packageName();
+        parentPackageName=Utils.getPackageElement(annotatedElement).getQualifiedName().toString();
         if ("".equals(packageName)|| null==packageName){
-            packageName=Utils.getPackageElement(annotatedElement).getQualifiedName().toString();
+            packageName=parentPackageName+PACKAGE_SUFFITX;
         }
 
     }
 
-
+    public String getPackageName() {
+        return packageName;
+    }
 
     public Api.HttpMethod getMethod() {
         return method;
@@ -94,9 +102,9 @@ public class ApiPart {
                 .addMember("value",urlBuilder.toString()).build();
         ClassName returnClassName= ClassName.get(RX,RX_OBSERVABLE_NAME);
 
-        String responseSimpleName=annotatedClassSimpleName+RESPONSE_SUFFIX;
-        ClassName reponseClassName=ClassName.get(packageName,responseSimpleName);
-        ParameterizedTypeName returnTypeName=ParameterizedTypeName.get(returnClassName,reponseClassName);
+       /* String responseSimpleName=annotatedClassSimpleName+RESPONSE_SUFFIX;
+        ClassName responseClassName=ClassName.get(parentPackageName,responseSimpleName);*/
+        ParameterizedTypeName returnTypeName=ParameterizedTypeName.get(returnClassName,responseClassName);
         MethodSpec.Builder method= MethodSpec
                 .methodBuilder(methodName)
                 .addModifiers(Modifier.PUBLIC,Modifier.ABSTRACT)
@@ -118,11 +126,22 @@ public class ApiPart {
         }
         method.addParameter(parameterSpec.build());
 
-        String interfaceName=annotatedClassSimpleName+API_SUFFIX;
+        String interfaceName=prefix+API_SUFFIX;
         TypeSpec.Builder type=TypeSpec.interfaceBuilder(interfaceName)
                 .addMethod(method.build())
                 .addModifiers(Modifier.PUBLIC);
         JavaFile.builder(packageName,type.build()).build().writeTo(filer);
 
+    }
+
+
+
+    public void setParam(String prefix, String responseCanonicalName) {
+        this.prefix=prefix;
+        if (Utils.isEmpty(responseCanonicalName)){
+            responseClassName=getViewClassName(parentPackageName,prefix);
+        }else {
+            responseClassName=ClassName.bestGuess(responseCanonicalName);
+        }
     }
 }

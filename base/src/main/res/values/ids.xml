@@ -7,4 +7,5 @@
 
     <item name="tv_key" type="id"></item>
     <item name="tv_value" type="id"></item>
+    <item name="fl_fragment_container" type="id"></item>
 </resources>

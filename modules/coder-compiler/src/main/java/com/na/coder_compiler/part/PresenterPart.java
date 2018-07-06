@@ -27,24 +27,31 @@ import static com.na.coder_compiler.Utils.getViewClassName;
 
 public class PresenterPart {
     public static final String PRESENTER_SUFFIX="Presenter";
+    public static final String PACKAGENAME_SUFFIX=".presenter";
 
     private String annotatedClassSimpleName;
     private String packageName;
-    public PresenterPart(TypeElement annotatedElement) {
+    private String parentPackageName;
+    private UsecasePart associatedUsecase;
+    private SubscriberPart associatedSubscriber;
+    private String prefix;
+    private ClassName viewClassName;
+    public PresenterPart(TypeElement annotatedElement,Presenter presenter) {
         annotatedClassSimpleName=annotatedElement.getSimpleName().toString();
 
 
-        Presenter subscriber=annotatedElement.getAnnotation(Presenter.class);
-        packageName=subscriber.packageName();
+        //Presenter presenter=annotatedElement.getAnnotation(Presenter.class);
+        packageName=presenter.packageName();
+        parentPackageName=Utils.getPackageElement(annotatedElement).getQualifiedName().toString();
         if ("".equals(packageName)|| null==packageName){
-            packageName= Utils.getPackageElement(annotatedElement).getQualifiedName().toString();
+            packageName= parentPackageName+PACKAGENAME_SUFFIX;
         }
     }
 
 
     public void brewJava(Filer filer) throws IOException {
 
-        ClassName usecaseClassName=getUsecaseClassName(packageName,annotatedClassSimpleName);
+        ClassName usecaseClassName=getUsecaseClassName(associatedUsecase.getPackageName(),prefix);
         String simpleName=usecaseClassName.simpleName();
         String fieldName="m"+simpleName;
 
@@ -55,19 +62,19 @@ public class PresenterPart {
                 .addParameter(usecaseClassName,paramName)
                 .addStatement("this."+fieldName+"="+paramName);
 
-        String subscriberSimpleClassName=annotatedClassSimpleName+PRESENTER_SUFFIX;
+        String subscriberSimpleClassName=prefix+PRESENTER_SUFFIX;
         ParameterizedTypeName parameterizedTypeName=ParameterizedTypeName.get(getExecutePresenterClassName(),
-                getViewClassName(packageName,annotatedClassSimpleName));
+                viewClassName);
 
 
         MethodSpec.Builder attachViewMethod=MethodSpec.methodBuilder("attachView")
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PUBLIC)
-                .addParameter(getViewClassName(packageName,annotatedClassSimpleName),"view")
+                .addParameter(viewClassName,"view")
                 .addStatement("super.attachView(view)")
                 .addStatement("$T subscriber=new $T(view)",
-                        getSubscriberClassName(packageName,annotatedClassSimpleName),
-                        getSubscriberClassName(packageName,annotatedClassSimpleName))
+                        getSubscriberClassName(associatedSubscriber.getPackageName(),prefix),
+                        getSubscriberClassName(associatedSubscriber.getPackageName(),prefix))
                 .addStatement("$T component=new $T(subscriber,"+fieldName+")", Utils.getUsecaseComponentClassName(),
                         Utils.getUsecaseComponentClassName())
                 .addStatement("manager.addUsecaseCompoment(component)");
@@ -88,4 +95,30 @@ public class PresenterPart {
     }
 
 
+    public void setAssociatedUsecase(UsecasePart associatedUsecase) {
+        this.associatedUsecase = associatedUsecase;
+    }
+
+    public UsecasePart getAssociatedUsecase() {
+        return associatedUsecase;
+    }
+
+    public void setAssociatedSubscriber(SubscriberPart associatedSubscriber) {
+        this.associatedSubscriber = associatedSubscriber;
+    }
+
+    public SubscriberPart getAssociatedSubscriber() {
+        return associatedSubscriber;
+    }
+
+
+
+    public void setParam(String prefix, String viewCanonicalName) {
+        this.prefix=prefix;
+        if (Utils.isEmpty(viewCanonicalName)){
+            viewClassName=getViewClassName(parentPackageName,prefix);
+        }else {
+            viewClassName=ClassName.bestGuess(viewCanonicalName);
+        }
+    }
 }

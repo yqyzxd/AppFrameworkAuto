@@ -1,4 +1,4 @@
-package com.wind.appframework.coder;
+package com.wind.data.login;
 
 import com.wind.base.response.BaseResponse;
 

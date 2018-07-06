@@ -12,4 +12,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface Subscriber {
     String packageName() default "";
+
+
 }

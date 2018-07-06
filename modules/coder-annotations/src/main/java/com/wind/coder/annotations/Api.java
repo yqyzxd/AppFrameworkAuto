@@ -16,6 +16,8 @@ public @interface Api {
     String url();
 
     String packageName() default "";
+
+
     enum HttpMethod {
         GET("get"), POST("post"), PUT("put");
 

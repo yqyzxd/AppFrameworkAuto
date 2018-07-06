@@ -44,6 +44,7 @@ dependencies {
     api androidDependencies.palette
 
     api baseDependencies.retrofit
+    api baseDependencies.httplogginterceptor
     //api baseDependencies.converter_gson
     api baseDependencies.converter_fastjson
     api baseDependencies.adapter_rxjava

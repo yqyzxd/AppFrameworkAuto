@@ -56,5 +56,7 @@ public class CoderItem {
 
     public void setPresenter(PresenterPart presenter) {
         this.presenter = presenter;
+        this.presenter.setAssociatedUsecase(usecase);
+        this.presenter.setAssociatedSubscriber(subscriber);
     }
 }

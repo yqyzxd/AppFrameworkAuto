@@ -29,6 +29,7 @@ ext{
     javaxAnnotationVersion = '1.0'
     gsonVersion = '2.3'
     okHttpVersion = '2.5.0'
+    okhttplogginterceptorVersion = '3.6.0'
     androidAnnotationsVersion = '21.0.3'
     //base lib
     appCompatVersion="26.0.2"
@@ -38,7 +39,7 @@ ext{
     okhttpUtilViersion='2.6.2'
     androidFastjsonVersion='1.1.52.android'
     icepickVersion='3.2.0'
-    retrofitVersion='2.0.2'
+    retrofitVersion='2.4.0'
     //data lib
     sqlbriteVersion='1.1.1'
     autoValueVersion='1.1'
@@ -93,7 +94,7 @@ ext{
             fastjson:          "com.alibaba:fastjson:${androidFastjsonVersion}",
     ]
     baseDependencies=[
-
+            httplogginterceptor: "com.squareup.okhttp3:logging-interceptor:${okhttplogginterceptorVersion}",
             mosbymvp:   "com.hannesdorfmann.mosby:mvp:${mosbyMvpVersion}",
             okhttputils: "com.zhy:okhttputils:${okhttpUtilViersion}",
             rxJava:             "io.reactivex:rxjava:${rxJavaVersion}",

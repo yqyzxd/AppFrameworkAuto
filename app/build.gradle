@@ -26,6 +26,11 @@ android {
             path "CMakeLists.txt"
         }
     }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_7
+        targetCompatibility = JavaVersion.VERSION_1_7
+    }
 }
 
 dependencies {
@@ -36,11 +41,26 @@ dependencies {
     implementation project (path: ':location')
     implementation project (path: ':wview')
     implementation project (path: ':toastlib')
-    implementation project (path:':coder-annotations')
+
     implementation project(path:':aop-annotations')
     implementation project(path:':aop-runtime')
+
+    implementation project (path:':coder-annotations')
     annotationProcessor project(path:':coder-compiler')
+
+    /****dagger注解处理器*******/
+    annotationProcessor presentationDependencies.daggerCompiler
+    implementation presentationDependencies.dagger
+    provided presentationDependencies.javaxAnnotation
+
+
+
+    /****butterKnife注解处理器*******/
+    annotationProcessor baseDependencies.butterKnifeProcessor
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+
 }

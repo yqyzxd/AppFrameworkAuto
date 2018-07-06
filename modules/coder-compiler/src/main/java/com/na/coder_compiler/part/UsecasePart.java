@@ -28,6 +28,7 @@ import static com.na.coder_compiler.Utils.getResponseClassName;
 
 public class UsecasePart {
     private static final String USECASE_SUFFIX="Usecase";
+    private static final String PACKAGE_SUFFIX=".usecase";
     private static final ClassName SUPERCLASS_TYPENAME=
             ClassName.get("com.wind.base.usecase","RetrofitUsecase");
 
@@ -38,25 +39,30 @@ public class UsecasePart {
     private String annotatedClassSimpleName;
     private ApiPart apiPart;
     private String packageName;
-    public UsecasePart(TypeElement annotatedElement){
+    private String parentPackageName;
+    private String prefix;
+    private ClassName requestClassName;
+    private ClassName responseClassName;
+    public UsecasePart(TypeElement annotatedElement,Usecase usecase){
         annotatedClassSimpleName=annotatedElement.getSimpleName().toString();
-        Usecase usecase=annotatedElement.getAnnotation(Usecase.class);
+       // Usecase usecase=annotatedElement.getAnnotation(Usecase.class);
         packageName=usecase.packageName();
+        parentPackageName=Utils.getPackageElement(annotatedElement).getQualifiedName().toString();
         if ("".equals(packageName)|| null==packageName){
-            packageName= Utils.getPackageElement(annotatedElement).getQualifiedName().toString();
+            packageName= parentPackageName+PACKAGE_SUFFIX;
         }
     }
 
     public void brewJava(Filer filer) throws IOException {
 
         ParameterizedTypeName returnTypeName=ParameterizedTypeName.get(RX_OBSERVABLE_TYPENAME,
-                getResponseClassName(packageName,annotatedClassSimpleName));
+                responseClassName);
 
         MethodSpec.Builder method=MethodSpec.methodBuilder("buildUsecaseObservable")
-                .addParameter(getRequestClassName(packageName,annotatedClassSimpleName),"request")
+                .addParameter(requestClassName,"request")
                 .addModifiers(Modifier.PUBLIC)
                 .returns(returnTypeName);
-        ClassName apiClassName=getApiClassName(packageName,annotatedClassSimpleName);
+        ClassName apiClassName=getApiClassName(apiPart.getPackageName(),prefix);
         method.addStatement("$T api = mRetrofit.create("+apiClassName+".class)",apiClassName);
         String apiMethodName=apiPart.getMethod().getName();
 
@@ -74,10 +80,10 @@ public class UsecasePart {
 
 
 
-        String className=annotatedClassSimpleName+ USECASE_SUFFIX;
+        String className=prefix+ USECASE_SUFFIX;
 
         ParameterizedTypeName parameterizedTypeName=ParameterizedTypeName.get(SUPERCLASS_TYPENAME,
-                getRequestClassName(packageName,annotatedClassSimpleName),getResponseClassName(packageName,annotatedClassSimpleName));
+               requestClassName,responseClassName);
         TypeSpec typeSpec=TypeSpec.classBuilder(className)
                 .superclass(parameterizedTypeName)
                 .addModifiers(Modifier.PUBLIC)
@@ -93,5 +99,30 @@ public class UsecasePart {
 
     public void setAssociatedApi(ApiPart api){
         this.apiPart=api;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+
+
+    public void setParam(String prefix, String requestCanonicalName, String responseCanonicalName) {
+        this.prefix=prefix;
+
+
+
+        if (Utils.isEmpty(requestCanonicalName)){
+            requestClassName=getRequestClassName(parentPackageName,prefix);
+        }else {
+            requestClassName=ClassName.bestGuess(requestCanonicalName);
+        }
+
+        if (Utils.isEmpty(responseCanonicalName)){
+            responseClassName=getResponseClassName(parentPackageName,prefix);
+        }else {
+            responseClassName=ClassName.bestGuess(responseCanonicalName);
+        }
+
     }
 }

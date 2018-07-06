@@ -12,6 +12,12 @@ import static javax.lang.model.element.ElementKind.PACKAGE;
  */
 
 public class Utils {
+
+    public static String ACTIVITY_SUFFIX="Activity";
+    public static String FRAGMENT_SUFFIX="Fragment";
+    public static String LAYOUT_SUFFIX="Layout";
+
+
     private static final String API_SUFFIX="Api";
     private static final String REQUEST_SUFFIX="Request";
     private static final String RESPONSE_SUFFIX="Response";
@@ -77,5 +83,12 @@ public class Utils {
             element = element.getEnclosingElement();
         }
         return (PackageElement) element;
+    }
+
+    public static boolean isEmpty(String value){
+        if (value ==null || "".equals(value)){
+            return true;
+        }
+        return false;
     }
 }

@@ -12,6 +12,8 @@ import com.hannesdorfmann.mosby.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 import com.wind.base.di.DaggerComponent;
 import com.wind.base.di.HasComponent;
+import com.wind.base.dialog.LoadingDialogHelper;
+import com.wind.toastlib.ToastUtil;
 
 import butterknife.ButterKnife;
 import icepick.Icepick;
@@ -85,6 +87,22 @@ public abstract class DaggerMvpFragment<V extends MvpView,P extends MvpPresenter
     @Override public void onDestroyView() {
         super.onDestroyView();
         //ButterKnife.unbind(this);
+    }
+
+
+    public void showError(String msg) {
+        ToastUtil.showToast(getActivity(),msg);
+        hideOpLoadingIndicator();
+    }
+
+
+    public void showOpLoadingIndicator() {
+        LoadingDialogHelper.showOpLoading(getActivity());
+    }
+
+
+    public void hideOpLoadingIndicator() {
+        LoadingDialogHelper.hideOpLoading();
     }
 
 
