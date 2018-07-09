@@ -1,11 +1,11 @@
 package com.wind.appframework.login;
 
-import com.wind.appframework.login.presenter.LoginPresenter;
-import com.wind.base.di.BaseMvpComponent;
+import com.wind.base.di.DaggerComponent;
 
 import dagger.Subcomponent;
 
 @Subcomponent(modules = LoginModule.class)
-public interface LoginComponent extends BaseMvpComponent<LoginView,LoginPresenter>{
+public interface LoginComponent extends DaggerComponent/*BaseMvpComponent<LoginView,LoginPresenter>*/{
 
+    void inject(LoginFragment loginFragment);
 }

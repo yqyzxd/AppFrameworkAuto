@@ -1,40 +1,22 @@
 package com.wind.base.response;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**
  * Created by wind on 16/5/19.
  */
 public class BaseResponse {
-    /**
-     * 金币不足
-     */
-    public static final int CODE_NO_COIN=-10000;
-    /**
-     * 显示需要多少金币
-     */
-    public static final int CODE_COIN_DIALOG=10000;
+
     /**
      * 成功
      */
     public static final int CODE_SUCCESS=0;
 
-    /**
-     * 不是会员
-     */
-    public static final int CODE_NOT_MEMBER = -20000;
 
-    /**
-     * 资料未完善
-     */
-    public static final int CODE_NO_PROFILE = -30000;
-
-    /**
-     * 无畅聊次数
-     */
-    public static final int CODE_NO_CHATCOUNT = 20000;
     /**
      * 错误码
      */
-
+    @JSONField(name = "code")
     private int err;
 
     /**

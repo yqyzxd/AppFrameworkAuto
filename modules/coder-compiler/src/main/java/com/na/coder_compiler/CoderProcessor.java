@@ -228,4 +228,5 @@ public class CoderProcessor extends AbstractProcessor {
     private void error(Element annotatedElement, String msg) {
         mMessager.printMessage(Diagnostic.Kind.ERROR, msg, annotatedElement);
     }
+
 }

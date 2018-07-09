@@ -6,8 +6,9 @@ import android.support.annotation.Nullable;
 import com.wind.appframework.App;
 import com.wind.appframework.R;
 import com.wind.base.BaseInjectActivity;
+import com.wind.base.di.HasComponent;
 
-public class LoginActivity extends BaseInjectActivity<LoginComponent>{
+public class LoginActivity extends BaseInjectActivity<LoginComponent> implements HasComponent<LoginComponent>{
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

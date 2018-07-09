@@ -1,13 +1,6 @@
 package com.wind.base.request;
 
-import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import com.wind.base.C;
-import com.wind.base.utils.AppUtil;
-
-import java.lang.reflect.Method;
 
 /**
  * Created by wind on 16/5/19.
@@ -15,7 +8,7 @@ import java.lang.reflect.Method;
 public class BaseRequest {
     public BaseRequest(){
         //利用反射获取context
-        try {
+       /* try {
             Class appClass=Class.forName("com.xkd.dinner.App");
             Method getMethod=appClass.getDeclaredMethod("get");
             Application app= (Application) getMethod.invoke(appClass);
@@ -32,7 +25,7 @@ public class BaseRequest {
             app_id=channel= (String) getChannelMethod.invoke(analyticsConfigClass,app);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
     public static final int LOAD_FROM_WEB=0;
     public static final int LOAD_FROM_LOCAL=1;

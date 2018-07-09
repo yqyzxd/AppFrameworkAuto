@@ -5,6 +5,7 @@ import android.app.Application;
 import com.wind.appframework.base.di.AppComponent;
 import com.wind.appframework.base.di.AppModule;
 import com.wind.appframework.base.di.DaggerAppComponent;
+import com.wind.appframework.base.di.ProviderModule;
 
 public class App extends Application {
 
@@ -27,6 +28,7 @@ public class App extends Application {
         return DaggerAppComponent
                 .builder()
                 .appModule(new AppModule(this))
+                .providerModule(new ProviderModule())
                 .build();
     }
 

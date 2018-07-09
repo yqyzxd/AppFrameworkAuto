@@ -84,7 +84,7 @@ public class C {
         /**
          * 测试地址
          */
-        static String DEBUG_BASE_URL="http://tuhaofanju.dev.miaotu.net/app/";
+        static String DEBUG_BASE_URL="http://coffee.dev.miaotu.net/";
 
         /**
          * 线上地址

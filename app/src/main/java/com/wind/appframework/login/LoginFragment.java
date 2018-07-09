@@ -13,6 +13,8 @@ import com.wind.coder.annotations.Param;
 import com.wind.data.login.LoginRequest;
 import com.wind.data.login.LoginResponse;
 
+import javax.inject.Inject;
+
 
 @Heros(
         param = @Param(
@@ -23,13 +25,17 @@ import com.wind.data.login.LoginResponse;
         ),
         api = @Api(httpMethod = Api.HttpMethod.POST, url = "/login")
 )
-public class LoginFragment extends DaggerMvpFragment<LoginView, LoginPresenter, LoginComponent>
+public class LoginFragment extends DaggerMvpFragment<LoginView,LoginPresenter, LoginComponent>
 implements LoginView{
 
 
+
+    @Inject
+    LoginPresenter loginPresenter;
     @Override
     protected void inject() {
-        // getComponent().inject();
+        //注入LoginPresenter
+         getComponent().inject(this);
     }
 
     @Override
@@ -39,8 +45,11 @@ implements LoginView{
 
     @Override
     public LoginPresenter createPresenter() {
-        return null;
+        return loginPresenter;
     }
+
+
+
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
