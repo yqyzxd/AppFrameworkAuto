@@ -124,7 +124,7 @@ public class CountdownLayout extends FrameLayout {
 
     private void showCountdown(int seconds) {
         //获取分钟，
-        int minute=seconds/60;
+        //int minute=seconds/60;
         int second=seconds%60;
         if (second<10){
             tv_show.setText(getContext().getString(R.string.wd_countdown,"0"+second));

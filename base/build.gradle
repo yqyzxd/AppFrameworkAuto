@@ -35,6 +35,12 @@ dependencies {
 
     annotationProcessor baseDependencies.daggerCompiler
     api baseDependencies.dagger
+
+    api 'com.google.dagger:dagger-android:2.16'
+    api 'com.google.dagger:dagger-android-support:2.16' // if you use the support libraries
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.16'
+
+
     api baseDependencies.butterKnife
     annotationProcessor baseDependencies.butterKnifeProcessor
     api baseDependencies.icepick

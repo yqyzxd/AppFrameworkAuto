@@ -32,11 +32,9 @@ implements LoginView{
 
     @Inject
     LoginPresenter loginPresenter;
-    @Override
-    protected void inject() {
-        //注入LoginPresenter
-         getComponent().inject(this);
-    }
+
+
+
 
     @Override
     protected int getLayoutRes() {
@@ -45,6 +43,7 @@ implements LoginView{
 
     @Override
     public LoginPresenter createPresenter() {
+
         return loginPresenter;
     }
 
@@ -54,7 +53,13 @@ implements LoginView{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+       /* LoginComponent.Builder mComponent=  App.get()
+                .appComponent()
+                .componentLoginBuilder();
+        mComponent.seedInstance(this);
+        LoginComponent loginComponent= (LoginComponent) mComponent.build();
+        Retrofit retrofit= loginComponent.retrofit();
+        System.out.println(retrofit);*/
         presenter.execute(new LoginRequest());
     }
 

@@ -1,8 +1,7 @@
 package com.wind.appframework.base.di;
 
 
-import com.wind.appframework.login.LoginComponent;
-import com.wind.appframework.login.LoginModule;
+import com.wind.appframework.App;
 
 import javax.inject.Singleton;
 
@@ -14,6 +13,7 @@ import dagger.Component;
 @Singleton
 @Component(modules = {AppModule.class, ProviderModule.class})
 public interface AppComponent {
+    void  inject(App app);
 
-    LoginComponent plus(LoginModule loginModule);
+    //LoginComponent.Builder componentLoginBuilder();
 }

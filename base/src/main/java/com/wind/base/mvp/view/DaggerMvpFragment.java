@@ -1,5 +1,6 @@
 package com.wind.base.mvp.view;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import com.wind.base.dialog.LoadingDialogHelper;
 import com.wind.toastlib.ToastUtil;
 
 import butterknife.ButterKnife;
+import dagger.android.support.AndroidSupportInjection;
 import icepick.Icepick;
 
 /**
@@ -30,12 +32,14 @@ public abstract class DaggerMvpFragment<V extends MvpView,P extends MvpPresenter
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        injectDependencies();
-
-        //FragmentArgs.inject(this);
+      //  injectDependencies();
     }
 
-
+    @Override
+    public void onAttach(Context context) {
+        AndroidSupportInjection.inject(this);
+        super.onAttach(context);
+    }
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -56,6 +60,11 @@ public abstract class DaggerMvpFragment<V extends MvpView,P extends MvpPresenter
         ButterKnife.bind(this,view);
     }
 
+
+    /**
+     * 引入dagger.android包不再需要获取到Component
+     */
+    @Deprecated
     private void injectDependencies() {
         if (getActivity() instanceof HasComponent){
             mComponent = ((HasComponent<C>) getActivity()).getComponent();
@@ -65,10 +74,11 @@ public abstract class DaggerMvpFragment<V extends MvpView,P extends MvpPresenter
         if (mComponent==null){
             throw new NullPointerException("Component can not be null! you should override createComponent method");
         }
-        inject();
+        //inject();
+
     }
 
-    protected abstract void inject();
+    //protected abstract void inject(){}
 
     /**
      * 如果activity不是HasComponent类型，那么fragment需要自己createComponent();

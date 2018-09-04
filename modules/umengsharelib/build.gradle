@@ -35,8 +35,8 @@ dependencies {
 
     def umengDependencies = rootProject.ext.umengDependencies
     //api umengDependencies.umeng_common
-    api umengDependencies.umeng_analytics
-
+    //api umengDependencies.umeng_analytics
+    api 'com.umeng.sdk:analytics:7.5.3'
     compile project(':toastlib')
    /* api 'com.umeng.sdk:share-core:latest.integration'
     api 'com.umeng.sdk:share-qq:latest.integration'

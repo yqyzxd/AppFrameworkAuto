@@ -214,7 +214,7 @@ public class CoderProcessor extends AbstractProcessor {
         }
 
         mCoderMap.clear();
-        return true;
+        return false;
     }
 
     private boolean isValid(Element annotatedElement) {

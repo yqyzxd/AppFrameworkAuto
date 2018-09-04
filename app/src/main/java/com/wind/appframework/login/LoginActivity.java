@@ -3,7 +3,6 @@ package com.wind.appframework.login;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.wind.appframework.App;
 import com.wind.appframework.R;
 import com.wind.base.BaseInjectActivity;
 import com.wind.base.di.HasComponent;
@@ -19,9 +18,10 @@ public class LoginActivity extends BaseInjectActivity<LoginComponent> implements
 
     @Override
     protected void initializeInjector() {
-        mComponent= App
+
+      /*  mComponent= App
                 .get()
                 .appComponent()
-                .plus(new LoginModule());
+                .plus(new LoginModule());*/
     }
 }
