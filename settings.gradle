@@ -1,4 +1,4 @@
-include ':app', ':base', ':data', ':domain',  ':', ':', ':'
+include ':app', ':base', ':data', ':domain'
 
 include ':location'
 project(':location').projectDir = new File(rootDir, 'modules/location')
@@ -20,4 +20,6 @@ project(':aop-runtime').projectDir = new File(rootDir, 'modules/aop-runtime')
 include ':aop-plugin'
 project(':aop-plugin').projectDir = new File(rootDir, 'modules/aop-plugin')
 
+include ':PullToRefreshLib'
+project(':PullToRefreshLib').projectDir = new File(rootDir, 'modules/PullToRefreshLib')
 

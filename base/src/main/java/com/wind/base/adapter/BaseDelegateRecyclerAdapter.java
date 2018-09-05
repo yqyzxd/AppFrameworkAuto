@@ -16,7 +16,7 @@ import java.util.List;
 public abstract class BaseDelegateRecyclerAdapter extends RecyclerView.Adapter {
 
     protected AdapterDelegatesManager<List<DisplayItem>> manager;
-    private List<DisplayItem> items;
+    protected List<DisplayItem> items;
     protected Activity mActivity;
     public BaseDelegateRecyclerAdapter(Activity activity){
         manager=new AdapterDelegatesManager<>();
@@ -52,11 +52,22 @@ public abstract class BaseDelegateRecyclerAdapter extends RecyclerView.Adapter {
         return items;
     }
 
+    public void clear(){
+        this.items.clear();
+        notifyDataSetChanged();
+    }
+    public void replace(DisplayItem item) {
+        this.items.clear();
+        add(item);
+    }
     public void replace(List<DisplayItem> items) {
         this.items.clear();
         addAll(items);
     }
-
+    public void add(DisplayItem item){
+        this.items.add(item);
+        notifyDataSetChanged();
+    }
     public void addAll(List<DisplayItem> items){
 
 
@@ -68,6 +79,16 @@ public abstract class BaseDelegateRecyclerAdapter extends RecyclerView.Adapter {
 
     public DisplayItem getItem(int position){
         return items.get(position);
+    }
+
+    public int getPosition(DisplayItem target){
+        for (int i=0;i<items.size();i++){
+            DisplayItem item=items.get(i);
+            if (item==target){
+                return i;
+            }
+        }
+        return -1;
     }
 
 }

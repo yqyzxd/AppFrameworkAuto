@@ -59,4 +59,5 @@ dependencies {
 
     compile project(':umengsharelib')
     compile project(':wview')
+    compile project(':PullToRefreshLib')
 }

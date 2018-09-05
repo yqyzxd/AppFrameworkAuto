@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AppFramework.iml" filepath="$PROJECT_DIR$/AppFramework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modules/PullToRefreshLib/PullToRefreshLib.iml" filepath="$PROJECT_DIR$/modules/PullToRefreshLib/PullToRefreshLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/aop-annotations/aop-annotations.iml" filepath="$PROJECT_DIR$/modules/aop-annotations/aop-annotations.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/aop-plugin/aop-plugin.iml" filepath="$PROJECT_DIR$/modules/aop-plugin/aop-plugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/aop-runtime/aop-runtime.iml" filepath="$PROJECT_DIR$/modules/aop-runtime/aop-runtime.iml" />
