@@ -37,7 +37,7 @@ public class SubscriberPart {
         this.subscriber=subscriber;
         //Subscriber subscriber=annotatedElement.getAnnotation(Subscriber.class);
         packageName=subscriber.packageName();
-        parentPackageName=Utils.getPackageElement(annotatedElement).getQualifiedName().toString();
+        parentPackageName= Utils.getPackageElement(annotatedElement).getQualifiedName().toString();
         if ("".equals(packageName)|| null==packageName){
             packageName=parentPackageName+ PACKAGE_SUFFIX;
         }

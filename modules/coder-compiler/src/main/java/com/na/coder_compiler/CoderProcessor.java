@@ -2,7 +2,9 @@ package com.na.coder_compiler;
 
 import com.google.auto.service.AutoService;
 import com.na.coder_compiler.part.ApiPart;
+import com.na.coder_compiler.part.ApiProxyPart;
 import com.na.coder_compiler.part.PresenterPart;
+import com.na.coder_compiler.part.RepositoryPart;
 import com.na.coder_compiler.part.SubscriberPart;
 import com.na.coder_compiler.part.UsecasePart;
 import com.wind.coder.annotations.Api;
@@ -112,15 +114,29 @@ public class CoderProcessor extends AbstractProcessor {
                 String viewCanonicalName=param.viewCanonicalName();
                 String requestCanonicalName=param.requestCanonicalName();
                 String responseCanonicalName=param.responseCanonicalName();
+                boolean page=param.page();//是否是分页操作
 
                 Api api=heros.api();
                 ApiPart apiPart = new ApiPart(typeAnnotatedElement,api);
                 apiPart.setParam(prefix,responseCanonicalName);
                 item.setApi(apiPart);
+                RepositoryPart repositoryPart=null;
+                if (page) {
+                    ApiProxyPart apiProxyPart = new ApiProxyPart(typeAnnotatedElement);
+                    apiProxyPart.setAssociatedApi(apiPart);
+                    apiProxyPart.setParam(prefix,requestCanonicalName,responseCanonicalName);
+                    item.setApiProxy(apiProxyPart);
+
+                    repositoryPart=new RepositoryPart(typeAnnotatedElement);
+                    repositoryPart.setAssociatedProxyApi(apiProxyPart);
+                    repositoryPart.setParam(prefix,requestCanonicalName,responseCanonicalName);
+                    item.setRepository(repositoryPart);
+                }
 
                 Usecase usecase=heros.usecase();
                 UsecasePart usecasePart=new UsecasePart(typeAnnotatedElement,usecase);
-                usecasePart.setParam(prefix,requestCanonicalName,responseCanonicalName);
+                usecasePart.setAssociatedRepository(repositoryPart);
+                usecasePart.setParam(prefix,requestCanonicalName,responseCanonicalName,page);
                 item.setUsecase(usecasePart);
 
                 Subscriber subscriber=heros.subscriber();

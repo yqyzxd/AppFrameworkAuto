@@ -5,7 +5,7 @@ android {
     buildToolsVersion '26.0.2'
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -40,7 +40,7 @@ dependencies {
     api 'com.google.dagger:dagger-android-support:2.16' // if you use the support libraries
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.16'
 
-
+    api rootProject.ext.presentationDependencies.loadinglayout
     api baseDependencies.butterKnife
     annotationProcessor baseDependencies.butterKnifeProcessor
     api baseDependencies.icepick

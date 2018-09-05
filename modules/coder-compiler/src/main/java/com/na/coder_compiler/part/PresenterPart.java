@@ -42,7 +42,7 @@ public class PresenterPart {
 
         //Presenter presenter=annotatedElement.getAnnotation(Presenter.class);
         packageName=presenter.packageName();
-        parentPackageName=Utils.getPackageElement(annotatedElement).getQualifiedName().toString();
+        parentPackageName= Utils.getPackageElement(annotatedElement).getQualifiedName().toString();
         if ("".equals(packageName)|| null==packageName){
             packageName= parentPackageName+PACKAGENAME_SUFFIX;
         }

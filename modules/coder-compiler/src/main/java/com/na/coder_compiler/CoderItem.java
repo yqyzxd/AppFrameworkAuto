@@ -1,7 +1,9 @@
 package com.na.coder_compiler;
 
 import com.na.coder_compiler.part.ApiPart;
+import com.na.coder_compiler.part.ApiProxyPart;
 import com.na.coder_compiler.part.PresenterPart;
+import com.na.coder_compiler.part.RepositoryPart;
 import com.na.coder_compiler.part.SubscriberPart;
 import com.na.coder_compiler.part.UsecasePart;
 
@@ -22,6 +24,8 @@ public class CoderItem {
     private String packageName;
     private SubscriberPart subscriber;
     private PresenterPart presenter;
+    private ApiProxyPart apiProxy;
+    private RepositoryPart repository;
 
 
     public void setApi(ApiPart api) {
@@ -31,6 +35,10 @@ public class CoderItem {
     public void brewJava(Filer filer) throws IOException {
         if (api!=null)
             api.brewJava(filer);
+        if (apiProxy!=null)
+            apiProxy.brewJava(filer);
+        if (repository!=null)
+            repository.brewJava(filer);
         if (usecase!=null)
             usecase.brewJava(filer);
         if (subscriber!=null){
@@ -58,5 +66,13 @@ public class CoderItem {
         this.presenter = presenter;
         this.presenter.setAssociatedUsecase(usecase);
         this.presenter.setAssociatedSubscriber(subscriber);
+    }
+
+    public void setApiProxy(ApiProxyPart apiProxy) {
+        this.apiProxy = apiProxy;
+    }
+
+    public void setRepository(RepositoryPart repository) {
+        this.repository = repository;
     }
 }

@@ -19,6 +19,7 @@ public class Utils {
 
 
     private static final String API_SUFFIX="Api";
+    public static final String APIPROXY_SUFFIX="ApiProxy";
     private static final String REQUEST_SUFFIX="Request";
     private static final String RESPONSE_SUFFIX="Response";
     private static final String VIEW_SUFFIX="View";
@@ -29,7 +30,14 @@ public class Utils {
         String apiSimpleName=simpleName+ API_SUFFIX;
         return ClassName.get(packageName,apiSimpleName);
     }
-
+    public static ClassName getApiProxyClassName(String packageName,String simpleName) {
+        String apiSimpleName=simpleName+ APIPROXY_SUFFIX;
+        return ClassName.get(packageName,apiSimpleName);
+    }
+    public static ClassName getRepositoryClassName(String packageName,String simpleName) {
+        String apiSimpleName=simpleName+ "PageRepository";
+        return ClassName.get(packageName,apiSimpleName);
+    }
     public static ClassName getResponseClassName(String packageName,String simpleName){
         String responseSimpleName=simpleName+RESPONSE_SUFFIX;
         ClassName responseClassName=ClassName.get(packageName,responseSimpleName);
@@ -53,6 +61,7 @@ public class Utils {
         ClassName viewClassName=ClassName.get(packageName,simpleName+USECASE_SUFFIX);
         return viewClassName;
     }
+
     public static ClassName getUsecaseComponentClassName(){
         ClassName className=ClassName.get(" com.wind.base.usecase",
                 "UsecaseCompoment");

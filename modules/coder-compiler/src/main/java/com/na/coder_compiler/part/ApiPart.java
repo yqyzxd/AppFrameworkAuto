@@ -49,7 +49,7 @@ public class ApiPart {
         method=api.httpMethod();
         url=api.url();
         packageName=api.packageName();
-        parentPackageName=Utils.getPackageElement(annotatedElement).getQualifiedName().toString();
+        parentPackageName= Utils.getPackageElement(annotatedElement).getQualifiedName().toString();
         if ("".equals(packageName)|| null==packageName){
             packageName=parentPackageName+PACKAGE_SUFFITX;
         }

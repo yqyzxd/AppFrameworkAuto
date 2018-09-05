@@ -20,8 +20,8 @@ import javax.inject.Inject;
         param = @Param(
                 viewCanonicalName = "com.wind.appframework.login.LoginView",
                 responseCanonicalName = "com.wind.data.login.LoginResponse",
-                requestCanonicalName = "com.wind.data.login.LoginRequest"
-
+                requestCanonicalName = "com.wind.data.login.LoginRequest",
+                page=true
         ),
         api = @Api(httpMethod = Api.HttpMethod.POST, url = "/login")
 )

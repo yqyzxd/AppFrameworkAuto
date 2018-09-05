@@ -8,8 +8,10 @@ import android.view.View;
 
 import com.wind.base.R;
 import com.wind.base.mvp.view.ErrorMvpView;
+import com.wind.base.mvp.view.MvpPageLoadingView;
 import com.wind.base.mvp.view.PureMvpView;
 import com.wind.base.response.BaseResponse;
+import com.wind.base.response.PageResponse;
 
 import rx.Observer;
 
@@ -31,10 +33,16 @@ public abstract class NextObserver<V extends ErrorMvpView,RP extends BaseRespons
         if (rp.getErrCode()!= BaseResponse.CODE_SUCCESS){
             mView.showError(rp.getErrMsg());
         }else {
-            onSuccess(rp);
+            if (isPageResponse(rp)){
+                MvpPageLoadingView pageView= (MvpPageLoadingView) mView;
+                pageView.showPage(rp);
+            }else
+                onSuccess(rp);
         }
     }
-
+    private boolean isPageResponse(RP rp){
+        return rp instanceof PageResponse;
+    }
     protected  void onSuccess(RP rp){
         if (mView instanceof PureMvpView){
             PureMvpView pureView= (PureMvpView) mView;
