@@ -34,7 +34,9 @@ public class RepositoryPart {
     private ApiProxyPart apiProxyPart;
     private static final ClassName RX_OBSERVABLE_TYPENAME=
             ClassName.get("rx","Observable");
-    private static final ClassName PAGE_REPOSITORY_TYPENAME=
+    private static final ClassName PSPAGE_TYPENAME=
+            ClassName.get("com.wind.base.http.page","PsPage");
+    private static final ClassName PAGEREPOSITORY_TYPENAME=
             ClassName.get("com.wind.base.repository","PageRepository");
     public RepositoryPart(TypeElement annotatedElement){
 
@@ -67,28 +69,30 @@ public class RepositoryPart {
         MethodSpec.Builder constructor= MethodSpec.constructorBuilder()
                 .addParameter(apiProxyClassName,paramName)
                 .addAnnotation(getInjectClassName())
-                .addStatement("this."+fieldName+"="+paramName);
+                .addStatement("super("+paramName+")");
 
-        ParameterizedTypeName returnTypeName=ParameterizedTypeName.get(RX_OBSERVABLE_TYPENAME,
+       /* ParameterizedTypeName returnTypeName=ParameterizedTypeName.get(RX_OBSERVABLE_TYPENAME,
                 responseClassName);
         MethodSpec.Builder loadPageMethod=MethodSpec.methodBuilder("loadPage")
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(requestClassName,"request")
                 .addStatement("return "+fieldName+".get(request)")
 
-                .returns(returnTypeName);
+                .returns(returnTypeName);*/
 
 
 
         String pageRepositorySimpleClassName=prefix+PAGEREPOSITORY_SUFFIX;
 
-        ParameterizedTypeName parameterizedTypeName=ParameterizedTypeName.get(PAGE_REPOSITORY_TYPENAME,
+        ParameterizedTypeName parameterizedTypeName=ParameterizedTypeName.get(PSPAGE_TYPENAME,
+                requestClassName,responseClassName);
+        ParameterizedTypeName interfaceParameterizedTypeName=ParameterizedTypeName.get(PAGEREPOSITORY_TYPENAME,
                 requestClassName,responseClassName);
         TypeSpec typeSpec=TypeSpec.classBuilder(pageRepositorySimpleClassName)
-                .addSuperinterface(parameterizedTypeName)
+                .superclass(parameterizedTypeName)
+                .addSuperinterface(interfaceParameterizedTypeName)
                 .addModifiers(Modifier.PUBLIC)
                 .addMethod(constructor.build())
-                .addMethod(loadPageMethod.build())
                 .addField(field.build())
                 .build();
         JavaFile.builder(packageName,typeSpec).build().writeTo(filer);
@@ -102,16 +106,14 @@ public class RepositoryPart {
         return packageName;
     }
     /*
-     * public class ListPageRepository implements PageRepository<ListRequest,ListResponse> {
-     ListPageApiProxy apiProxy;
-     @Inject
-     public ListPageRepository(ListPageApiProxy apiProxy){
-     this.apiProxy=apiProxy;
-     }
-     @Override
-     public Observable<ListResponse> loadPage(ListRequest listRequest) {
-     return apiProxy.get(listRequest);
-     }
-     }
+     public class SquarePageRepository extends PsPage<SquareRequest, SquareResponse> {
+
+
+    public SquarePageRepository(SquareApiProxy pageApi) {
+        super(pageApi);
+    }
+
+
+}
      */
 }
