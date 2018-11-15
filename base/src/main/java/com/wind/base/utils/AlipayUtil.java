@@ -1,9 +1,12 @@
 package com.wind.base.utils;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+
+import com.wind.toastlib.ToastUtil;
 
 /**
  * Created by wind on 2017/8/4.
@@ -22,7 +25,7 @@ public class AlipayUtil {
             context.startActivity(intent);
 
         }else {
-            ToastUtilDeprecated.showToast(context,"请先安装支付宝");
+            ToastUtil.showToast((Activity) context,"请先安装支付宝");
         }
     }
     //判断是否安装支付宝app

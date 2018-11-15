@@ -100,7 +100,7 @@ public abstract class DaggerMvpFragment<V extends MvpView,P extends MvpPresenter
     }
 
 
-    public void showError(String msg) {
+    public void showError(int err,String msg) {
         ToastUtil.showToast(getActivity(),msg);
         hideOpLoadingIndicator();
     }

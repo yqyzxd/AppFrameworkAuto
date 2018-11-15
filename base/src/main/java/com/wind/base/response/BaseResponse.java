@@ -6,7 +6,7 @@ import com.alibaba.fastjson.annotation.JSONField;
  * Created by wind on 16/5/19.
  */
 public class BaseResponse {
-
+    public static final int CODE_NETWORK_ERROR=-10000001;
     /**
      * 成功
      */

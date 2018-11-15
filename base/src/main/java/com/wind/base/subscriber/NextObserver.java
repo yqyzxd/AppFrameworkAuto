@@ -31,7 +31,7 @@ public abstract class NextObserver<V extends ErrorMvpView,RP extends BaseRespons
     @Override
     public void onNext(RP rp) {
         if (rp.getErrCode()!= BaseResponse.CODE_SUCCESS){
-            mView.showError(rp.getErrMsg());
+            mView.showError(rp.getErrCode(),rp.getErrMsg());
         }else {
             if (isPageResponse(rp)){
                 MvpPageLoadingView pageView= (MvpPageLoadingView) mView;
@@ -69,7 +69,7 @@ public abstract class NextObserver<V extends ErrorMvpView,RP extends BaseRespons
         }
 
         if (activity!=null){
-            mView.showError(activity.getString(R.string.network_error));
+            mView.showError(BaseResponse.CODE_NETWORK_ERROR,activity.getString(R.string.network_error));
         }
 
     }

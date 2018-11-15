@@ -100,11 +100,11 @@ public class CoderProcessor extends AbstractProcessor {
                 String annotatedClassSimpleName=annotatedElement.getSimpleName().toString();
                 int suffixLength=0;
                 if (annotatedClassSimpleName.endsWith(Utils.ACTIVITY_SUFFIX)){
-                    suffixLength=Utils.ACTIVITY_SUFFIX.length();
+                    suffixLength= Utils.ACTIVITY_SUFFIX.length();
                 }else if (annotatedClassSimpleName.endsWith(Utils.FRAGMENT_SUFFIX)){
-                    suffixLength=Utils.FRAGMENT_SUFFIX.length();
+                    suffixLength= Utils.FRAGMENT_SUFFIX.length();
                 }else if (annotatedClassSimpleName.endsWith(Utils.LAYOUT_SUFFIX)){
-                    suffixLength=Utils.LAYOUT_SUFFIX.length();
+                    suffixLength= Utils.LAYOUT_SUFFIX.length();
                 }
                 String prefix=annotatedClassSimpleName
                         .substring(0,annotatedClassSimpleName.length()-suffixLength);

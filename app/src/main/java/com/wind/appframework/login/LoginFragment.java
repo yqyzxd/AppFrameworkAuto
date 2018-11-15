@@ -7,6 +7,7 @@ import android.view.View;
 import com.wind.appframework.R;
 import com.wind.appframework.login.presenter.LoginPresenter;
 import com.wind.base.mvp.view.DaggerMvpFragment;
+import com.wind.base.response.BaseResponse;
 import com.wind.coder.annotations.Api;
 import com.wind.coder.annotations.Heros;
 import com.wind.coder.annotations.Param;
@@ -18,26 +19,24 @@ import javax.inject.Inject;
 
 @Heros(
         param = @Param(
+
                 viewCanonicalName = "com.wind.appframework.login.LoginView",
                 responseCanonicalName = "com.wind.data.login.LoginResponse",
-                requestCanonicalName = "com.wind.data.login.LoginRequest",
-                page=true
+                requestCanonicalName = "com.wind.data.login.LoginRequest"
         ),
         api = @Api(httpMethod = Api.HttpMethod.POST, url = "/login")
 )
-public class LoginFragment extends DaggerMvpFragment<LoginView,LoginPresenter, LoginComponent>
-implements LoginView{
-
+public class LoginFragment extends DaggerMvpFragment<LoginView, LoginPresenter, LoginComponent>
+        implements LoginView {
 
 
     @Inject
     LoginPresenter loginPresenter;
 
 
-
-
     @Override
     protected int getLayoutRes() {
+
         return R.layout.activity_main;
     }
 
@@ -46,8 +45,6 @@ implements LoginView{
 
         return loginPresenter;
     }
-
-
 
 
     @Override
@@ -65,7 +62,7 @@ implements LoginView{
 
     @Override
     public void onSuccess(LoginResponse loginResponse) {
-       showError("登录成功");
+        showError(BaseResponse.CODE_SUCCESS,"登录成功");
     }
 
 

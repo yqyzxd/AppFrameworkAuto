@@ -8,5 +8,10 @@ import com.hannesdorfmann.mosby.mvp.MvpView;
 
 public interface ErrorMvpView extends MvpView {
 
-    void showError(String msg);
+    /**
+     *
+     * @param err 错误码
+     * @param msg 错误码对应的错误消息
+     */
+    void showError(int err,String msg);
 }

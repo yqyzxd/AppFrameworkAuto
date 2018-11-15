@@ -146,7 +146,7 @@ public class WebViewHelper {
                 return true;
             }
         });
-        webView.setWebChromeClient(new ReWebChomeClient(new OpenFileChooserCallBack() {
+        webView.setWebChromeClient(new WebViewHelper.ReWebChomeClient(new WebViewHelper.OpenFileChooserCallBack() {
             @Override
             public void openFileChooserCallBack(ValueCallback<Uri> uploadMsg, String acceptType) {
                 mUploadMsg = uploadMsg;

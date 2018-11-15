@@ -5,19 +5,16 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 
 import com.wind.base.utils.LogUtil;
-import com.wind.base.utils.Navigator;
 import com.wind.base.utils.WebViewHelper;
 import com.wind.umengsharelib.ShareLayout;
 
 import butterknife.ButterKnife;
-
 
 /**
  * Created by wind on 2017/3/9.
@@ -25,33 +22,35 @@ import butterknife.ButterKnife;
 
 public abstract class AbsH5Activity extends BaseActivity {
 
+    public static final String ARG_KEY_H5PARAM = "arg_key_h5param";
     protected H5Param mH5Param;
     protected WebView webView;
     protected ShareLayout mShareLayout;
-
+    private WebViewHelper.ProtocolHandler mProtocolHandler;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mH5Param = Navigator.getSerializableExtra(this);
+        mH5Param = (H5Param) getIntent().getSerializableExtra(ARG_KEY_H5PARAM);
         setContentView(getLayoutRes());
         ButterKnife.bind(this);
         View content = findViewById(R.id.webcontent);
-        if (content!=null){
+        if (content != null) {
             if (!mH5Param.isTitlebarOverlay()) {
-                ViewGroup.LayoutParams contentLayoutParams=content.getLayoutParams();
+                ViewGroup.LayoutParams contentLayoutParams = content.getLayoutParams();
                 FrameLayout.LayoutParams lp;
-                if (contentLayoutParams instanceof  FrameLayout.LayoutParams) {
-                    lp = (FrameLayout.LayoutParams)contentLayoutParams;
-                }else {
+                if (contentLayoutParams instanceof FrameLayout.LayoutParams) {
+                    lp = (FrameLayout.LayoutParams) contentLayoutParams;
+                } else {
                     throw new IllegalArgumentException("webcontent's layoutparams must be FrameLayout.LayoutParams");
                 }
-                //  int size=getResources().getDimensionPixelSize(R.dimen.action_bar_height);
-                TypedValue tv = new TypedValue();
-                if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-                    int actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
-                    lp.topMargin = actionBarHeight;
-                }
+//                  int size=getResources().getDimensionPixelSize(R.dimen.action_bar_height);
+//                TypedValue tv = new TypedValue();
+//                if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+//                    int actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
+//                    lp.topMargin = actionBarHeight;
+//                }
+                lp.topMargin = getResources().getDimensionPixelSize(R.dimen.action_bar_height);
 
             } else {
                 mTitleBar.setLineVisibility(View.GONE);
@@ -61,19 +60,30 @@ public abstract class AbsH5Activity extends BaseActivity {
         }
 
         View view = findViewById(R.id.webView);
-        webView= (WebView) view;
-        mShareLayout =(ShareLayout) findViewById(R.id.share_layout);
+        webView = (WebView) view;
+        mShareLayout = (ShareLayout) findViewById(R.id.share_layout);
 
 
-        registerWebHandler();
+        mProtocolHandler = getProtocolHandler();
         initView();
+        if (mProtocolHandler == null) {
+            registerWebHandler();
+        }
         loadH5();
     }
 
+
+    protected void registerWebHandler() {
+    }
+
     /**
-     * h5需要调用java时设置
+     * registerWebHandler互斥，当该方法返回为null时registerWebHandler才有效果
+     *
+     * @return
      */
-    protected abstract void registerWebHandler();
+    public WebViewHelper.ProtocolHandler getProtocolHandler() {
+        return null;
+    }
 
     public int getLayoutRes() {
         return R.layout.activity_h5;
@@ -96,34 +106,29 @@ public abstract class AbsH5Activity extends BaseActivity {
         }
     }
 
-    /**
-     * 设置webview相关参数
-     */
+
     private void initView() {
         WebViewHelper.getInstance()
-                .inflateWebView(this, webView,new WebViewHelper.OnPageLoadingListener() {
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            }
-
-            @Override
-            public void onPageFinished(WebView webView, String url) {
-                LogUtil.e("onPageFinished", "url" + url);
-                if (TextUtils.isEmpty(mH5Param.getTitle()) && !mH5Param.isTitlebarOverlay()) {
-                    String title = webView.getTitle();
-                    if (title != null && title.length() > 10) {
-                    } else {
-                        mTitleBar.setTitle(title);
+                .inflateWebView(this, webView, mProtocolHandler, new WebViewHelper.OnPageLoadingListener() {
+                    @Override
+                    public void onPageStarted(WebView view, String url, Bitmap favicon) {
                     }
 
-                }
+                    @Override
+                    public void onPageFinished(WebView webView, String url) {
+                        LogUtil.e("onPageFinished", "url" + url);
+                        if (TextUtils.isEmpty(mH5Param.getTitle()) && !mH5Param.isTitlebarOverlay()) {
+                            String title = webView.getTitle();
+                            if (title != null && title.length() > 10) {
+                            } else {
+                                mTitleBar.setTitle(title);
+                            }
 
-                onWebPageFinished(webView, url);
-            }
-        });
+                        }
 
-
-
+                        onWebPageFinished(webView, url);
+                    }
+                });
 
 
     }
@@ -137,18 +142,11 @@ public abstract class AbsH5Activity extends BaseActivity {
         }
     }
 
-    /**
-     * h5页面加载完成回调通知
-     * @param webView
-     * @param url
-     */
-    protected void onWebPageFinished(WebView webView, String url){}
+
+    protected void onWebPageFinished(WebView webView, String url) {
+    }
 
 
-
-    /**
-     * 刷新webview
-     */
     public void refresh() {
         if (webView != null) {
             webView.clearCache(true);
